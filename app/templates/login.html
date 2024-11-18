@@ -1,0 +1,36 @@
+<!-- app/templates/login.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>ログイン</h1>
+
+    <!-- エラーメッセージを表示する部分 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }}  <!-- CSRF対策のための隠しフィールド -->
+        <div>
+            <label for="email">Email</label>
+            {{ form.email() }}  <!-- メールアドレスの入力フィールド -->
+        </div>
+        <div>
+            <label for="password">Password</label>
+            {{ form.password() }}  <!-- パスワードの入力フィールド -->
+        </div>
+        <button type="submit">ログイン</button>  <!-- ログインボタン -->
+    </form>
+</body>
+</html>

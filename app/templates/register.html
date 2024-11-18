@@ -1,0 +1,38 @@
+<!-- app/templates/register.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">  <!-- 文字コードをUTF-8に設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- モバイル対応のための設定 -->
+    <title>User Registration</title>  <!-- ページのタイトル -->
+</head>
+<body>
+    <h1>ユーザー登録</h1>  <!-- ページの見出し -->
+
+    <!-- エラーメッセージを表示する部分 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>  <!-- エラーメッセージのリスト -->
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>  <!-- 各メッセージをリストアイテムとして表示 -->
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- フォームを表示 -->
+    <form method="POST">  <!-- フォームの開始。POSTメソッドでデータを送信 -->
+        {{ form.hidden_tag() }}  <!-- CSRF対策のための隠しフィールド -->
+        {% for field in form %}  <!-- フォームの各フィールドをループ処理 -->
+            <div>
+                <label for="{{ field.id }}">{{ field.label }}</label>  <!-- 各フィールドのラベル -->
+                {{ field() }}  <!-- 各フィールドの入力フィールド -->
+                {% for error in field.errors %}  <!-- 各フィールドのエラーメッセージをループ処理 -->
+                    <div class="error">{{ error }}</div>  <!-- エラーメッセージを表示 -->
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit">登録</button>  <!-- 登録ボタン -->
+    </form>
+</body>
+</html>
